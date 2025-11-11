@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ชื่อเว็บไซต์จองตั๋วหนัง</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      .Synopsis{
+        margin-top: 3%;
+      }
+      .toggle-buttons {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+      /* สีข้อความ ภาพยนตร์ที่กำลังเข้าฉาย */
+      .start {
+        color: #ecebe6; /* สีทอง */
+        margin-top: 2%;
+      }
+
+      .tab {
+        background: #fafafa;
+        color: rgb(231, 19, 19);
+        border: none;
+        padding: 10px 25px;
+        margin: 0 5px;
+        cursor: pointer;
+        border-radius: 25px;
+        font-size: 16px;
+      }
+
+      .tab.active {
+        background: gold;
+        color: black;
+      }
+
+      .movie-row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .movie-card {
+        width: 250px;
+        position: relative;
+      }
+
+      .movie-card img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .rank {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        background: gold;
+        color: black;
+        padding: 6px 10px;
+        border-radius: 50%;
+        font-weight: bold;
+      }
+
+      .movie-title {
+        margin-top: 10px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .date {
+        font-size: 12px;
+        color: #0b0b0b;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+      /* ไอคอนซับภาษา */
+      .media-info {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: fit-content;
+            background-color: #f9f9f9;
+          }
+
+          .media-info p {
+            margin: 5px 0;
+          }
+
+          .label {
+            font-weight: bold;
+            color: #333;
+          }
+
+          .value {
+            color: #555;
+          }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🎥 MovieTix</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html" style="color: #FFA500;">หน้าแรก</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="movies.html">ภาพยนตร์</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="theater.html">โรงภาพยนตร์</a>
+                    </li>
+                    <li>
+                        <a class="nav-link btn btn-danger ms-2 text-white" href="login.html">เข้าสู่ระบบ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-banner mb-5">
+        <div id="movieCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#movieCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#movieCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#movieCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#movieCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#movieCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100">
+                    <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                        <div class="centered-slide" id="MovieSlider1">
+                            <h1 class="bg-dark p-2 rounded">🔥 หนังใหม่มาแรง จองได้แล้ววันนี้!</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item h-100">
+                    <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                        <div class="centered-slide" id="MovieSlider2">
+                            <h1 class="bg-dark p-2 rounded">🎟️ โปรโมชั่นลด 50% ทุกที่นั่ง!</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item h-100">
+                    <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                        <div class="centered-slide" id="MovieSlider3">
+                            <h1 class="bg-dark p-2 rounded">✨ รอบพิเศษเสียงไทย จองก่อนเต็ม!</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item h-100">
+                    <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                        <div class="centered-slide" id="MovieSlider4">
+                            <h1 class="bg-dark p-2 rounded">🎥 หนังดัง นำกลับมาฉาย</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item h-100">
+                    <div class="d-flex align-items-center justify-content-center h-100 text-white">
+                        <div class="centered-slide" id="MovieSlider5">
+                            <h1 class="bg-dark p-2 rounded">🎟️ เอาใจชาวไทย 69 บาททุุกที่นั่ง!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </header>
+
+<div class="container-sm"> <!-- Insert container for control movies card // เพ่ิ่ม Container เพื่อควบคุม Card -->
+  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ ภาพยนตร์ที่กำลังเข้าฉาย</h2>
+  <div class="row g-4 justify-content-start">
+    <div class="col-md-3">
+      <!-- การ์ดที่ 1 -->
+      <div class="card movie-card h-100 text-center">
+          <img src="https://lh3.googleusercontent.com/QL3LESSRmu1f327YzgKUr_3GvslujLGocttMgiW3a3XDo3FuaSI_3hadZhBLeAP3aLpgevQwv-OQsrBpcbR1adDbVt8S8RtYKQ=s0" class="card-img-top" alt="เดอะสโตน">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie1">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 2 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://lh3.googleusercontent.com/pEXQ13Y_gC-OPK1A5qACt2TQpGOD0-SUb-dr4FrMI0Q97QAx_6Ib3gc38lJHsr8AT0Sn8I3Muh4IIRI8rrW16SemgNfGJPWBPAc=s0" class="card-img-top" alt="หลานม่า">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie2">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 3 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://f.ptcdn.info/951/083/000/scjv953dzhjA0H08qimd-o.jpg" class="card-img-top" alt="เธอฟอร์แคช">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie3">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 4 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://lh3.googleusercontent.com/ATHm4EqS11KlBrfeTohB_q9mcwYOQC4b-kiFR9-TgXt1fudgAvdxdXCeFBqi6oru_h4hvLhO1UCaoE0DYAV2LeRjPOG1--BYZro=s0" class="card-img-top" alt="วิมานหนาม">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie4">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 5 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://lh3.googleusercontent.com/lUfE_UJNwuu2Zqby6N32zC1ChbQjSptaqyG9vpEFUUZCZDCA7u5wojrh0v_D_3FDQ_DUC0YqrGaklXHCgM5FlmuLT83jiRgzp_8=s0" class="card-img-top" alt="เสือ">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie5">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 6 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://s.isanook.com/mv/0/ud/31/155015/1.jpg?ip/resize/w728/q80/jpg" class="card-img-top" alt="ธี่หยด">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie6">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 7 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://images.workpointtoday.com/workpointnews/2025/09/27135244/1758955962_586466-workpointtoday.webp" class="card-img-top" alt="อนงค์">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie7">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- การ์ดที่ 8 -->
+    <div class="col-md-3">
+      <div class="card movie-card h-100 text-center">
+        <img src="https://www.gdh559.com/assets/uploads/imgInp/14518fbb58fc5e6eb9b4f3f06dd8c89a.jpg" class="card-img-top" alt="404 สุขีนิรันดร์..RUN RUN">
+        <div class="card-body">
+          <button class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#movie8">รายละเอียดภาพยนตร์</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- 🎥 Modal แสดงรายละเอียด -->
+  <div class="modal fade" id="movie1" tabindex="-1" aria-labelledby="movie1Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie1Label">เดอะสโตน พระแท้ คนเก๊</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>Drama, Thriller</span></p>
+          <p>เรทผู้ชม: <span>15</span> | ⏱️ 120 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: อารักษ์ อมรศุภศิริ, วุฒิพงษ์ สุขะนินทร์</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://lh3.googleusercontent.com/MkfSghh1EQNVpTafsgRX2kj7J3wboEiwcdTj3T9U4bPFYkTLjTwMNtE1Ql28iFsoff9jadgeUyTqeupSvmbwCf0fSnrEU4ET=w100" alt="อิชณน์กร"><div class="actor-name">อิชณน์กร</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/kaEDbKtXT-JVc41ILgF0MFJtKVQKZCpcBjJC5zKgKhEDot8jdKoyYIGGGbuFPaecuJiq35g_EmG7sHRfRci7DGM-Z78dunDN=w100" alt="จุลจักร"><div class="actor-name">จุลจักร</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/Di-xCNRwP_d-WbDjw64GGeD0B5LIoYhwtEk5F4ZgrTAViCCBL0rIJp1KUUmQTwIAdeZUIqJ71ccG7VNeQBU9J2QTvCFQ5l6KrA=w100" alt="กรณิศ "><div class="actor-name">กรณิศ </div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/Cjib_G57lpzCygXvbne-nZf-BfMLFtWJAlXj1KfLSO3MbTbB8vkYD9L54oSJNcTLtAFGVdtt4aXAka1vP0gHUjhNASZHaEUo=w100" alt="จินเจษฎ์ "><div class="actor-name">จินเจษฎ์ </div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/UikPkJOmP1qRv_BoT6ZMKcGDjKNuQ4Mjiys740o3jm-lnbuymVsv33-C_fCCVO2o_QhXGsHCVUMdQVPYLnrAZ3VwXv-ZWzxI_Q=w100" alt="นพพล"><div class="actor-name">นพพลs</div></div>
+          </div>
+          <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>เมื่อ เอก ต้องการเงินไปรักษาพ่อที่ป่วยหนัก เขาเอาพระเครื่องของพ่อไป ประเมินราคากับเซียนพระชื่อดัง เซ้งพาราไดซ์ เอกได้เจอกับ เซียนหมวย เซียนพระสุดฮ็อตที่เข้ามาแนะนำให้ส่งพระเข้าประกวด</p>
+        </div>
+      </div>
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="movie2" tabindex="-1" aria-labelledby="movie2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie2Label">หลานม่า</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span> Family</span></p>
+          <p>เรทผู้ชม: <span>G</span> | ⏱️ 125 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: พัฒน์ บุญนิธิพัฒน์</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://lh3.googleusercontent.com/b2nLpUcN3WBxlMGxgsxmSL_U-hEV2rJsTXj5c2vjnFm2LHJDXxlSshvyvoGShsqK-dZij6KSzSwAFCaORQ=w100" alt="พงศธร จงวิลาส"><div class="actor-name">พงศธร จงวิลาส</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/Ds--KtIN6LSICI8sKhWRRneS8AiIH8pdvmuyAawLfxOW92gYzXba1A5YiDVBfAr-IutIzm7R5GNNkh-AlActmA7P_TN4vJij=w100" alt="พุฒิพงศ์ อัสสรัตนกุล"><div class="actor-name">พุฒิพงศ์ อัสสรัตนกุล</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/CbaxTU1RFEmt4E8vWv1POWjdYDSNQ1vkZRQsVdAui8x6UpbQeYRw0AZ7HVg933AylClIppZOsV5B1PljsDRS06z5giifclrvH38=w100" alt="สัญญา คุณากร"><div class="actor-name">สัญญา คุณากร</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/KIhMUnKJsjhNy3GtyR5vyCuAziQy6P39stxADFKnRedUNQO2mUwOyUAcUwNLu-H9uwjMSIsTeE14tEHFkpKcNN0x92q5TlVNA4Y=w100" alt="สฤญรัตน์ โทมัส"><div class="actor-name">สฤญรัตน์ โทมัส</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/sEeDNHScBBejKjWjV4Y0DihtThJvxewO69LPZ6c7-ITlKLUAiN4hi4YpvX6_GVhq1UWdqnzNZcekH7_qUAOplEManG-12owo-Q=w100" alt="ต้นตะวัน ตันติเวชกุล"><div class="actor-name">ต้นตะวัน ตันติเวชกุล</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/PReuvKOP3CNzbGkWWtKjka_Cygo_vsedYzRrZd21YqNVz7VboeXacoGOGRUevro72NJbaPU4770UGGJDiDuTEnNgRur8L6E2xg=w100" alt="อุษา เสมคำ"><div class="actor-name">อุษา เสมคำ</div></div>
+          </div>
+           <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>เอ็ม (บิวกิ้น พุฒิพงศ์) ตัดสินใจดรอปเรียนตอนปีสี่ เพื่อมาเอาดีทางการแคสต์เกมแต่ทำยังไงก็ไม่รุ่ง เอ็มเลยคิดว่าจะรวยด้วยการทำงานสบายๆ แบบ มุ่ย (ตู ต้นตะวัน) ลูกพี่ลูกน้อง ที่รับหน้าที่ดูแลอากงที่ป่วยระยะสุดท้าย จนกลายเป็นทายาทเพียงคนเดียวที่ได้รับมรดกเป็นบ้านราคากว่าสิบล้าน</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="movie3" tabindex="-1" aria-labelledby="movie3Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie3Label">เธอฟอร์แคช</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>Action, Romance</span></p>
+          <p>เรทผู้ชม: <span>15</span> | ⏱️ 135 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: วาสุเทพ เกตุเพ็ชร์</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Urassaya_Sperbund_in_October_2022.png" alt="อุรัสยา"><div class="actor-name">อุรัสยา</div></div>
+            <div class="actor"><img src="https://s.isanook.com/ca/0/ui/278/1394733/aaugust007-20230917_170407-379466657_18380057848039321_3868544740315637747_n.jpeg" alt="วชิรวิชญ์"><div class="actor-name">วชิรวิชญ์</div></div>
+            <div class="actor"><img src="https://files.ejan.co/wp-content/uploads/2023/11/226077085_372975467523836_6636107476576067015_n.jpg" alt="อุกฤษ วิลลีย์"><div class="actor-name">อุกฤษ วิลลีย์</div></div>
+            <div class="actor"><img src="https://storage-wp.thaipost.net/2022/01/2-4.png" alt="นิติ ชัยชิตาทร"><div class="actor-name">นิติ ชัยชิตาทร </div></div>
+          </div>
+         <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>ณ โลกสีเทาของเมืองชายหาดอันโด่งดังของไทย เขาคือหนุ่มหล่อนักทวงหนี้นอกระบบ ที่อาชีพของเขาแต่ละวันต้องเผชิญหน้ากับความขัดแย้งและความรุนแรงซ้ำ ๆ วนลูปแบบไม่รู้จบ </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="modal fade" id="movie4" tabindex="-1" aria-labelledby="movie4Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie4Label">วิมานหนาม</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>TBC</span></p>
+          <p>เรทผู้ชม: <span>15</span> | ⏱️ 125 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: นฤเบศ กูโน</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://lh3.googleusercontent.com/ZjIySmk3-n_jkGgLLr47kYkJx0C4kJcLdoOgqm9hksgNFkGk5MSIq4MbnQxoXGT05hnyfSHIVv_Cq_7PIvQPByd-97MXqgQgVA=w100" alt="สีดา พัวพิมล"><div class="actor-name">สีดา พัวพิมล</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/xgCH0yqoQOpeXvRPUYrRk0NVeea1o7IpAOws9D5rH9YJwlt0sdsEhhZY1aZkIpAiJw1v9h94UGoiNb3lOfdZ5qgxDBtuZmKq5g=w100" alt="เจฟ ซาเตอร์"><div class="actor-name">เจฟ ซาเตอร์</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/bhNKmXntqA6E0UbIUITxmg_bVD21gDBq19xf3FXsqqwd4hnV-VBuDJT5WBoj1VW6mPjQlXe5cArxHSikN9J2BNcMSY9iDDGewQ=w100" alt="อิงฟ้า วราหะ"><div class="actor-name">อิงฟ้า วราหะ</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/pzSrdQl7axS3oBD1Zael3m_t6t5ks_BJhHYklshnNc_JU6q-6iYCi7YdpxggNLimyuaphBg9kD5zRpqFhi7MWuNJNmCOZTONQOk=w100" alt="หฤษฎ์ บัวย้อย"><div class="actor-name">หฤษฎ์ บัวย้อย</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/LfNII9UwoanHOm9zZ00Z9w80WFSb3nyhnekhIYkGvUHHtVwoCB4YiSF9ZmSP9wlbZVI_qJVdZQQgk56SOVcXRTJdz-TxvA2FRA=w100" alt="พงศกร เมตตาริกานนท์"><div class="actor-name">พงศกร เมตตาริกานนท์</div></div>
+          </div>
+          <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>เมื่อบ้านพร้อมสวนทุเรียน ที่ควรเป็น ‘วิมาน’ ความรักของชายสองคน ถูกช่วงชิงไปด้วยกฎหมาย การขุด ‘หนาม’ ในตัว เพื่อปกป้องและทำลาย จึงเริ่มต้นขึ้น</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="movie5" tabindex="-1" aria-labelledby="movie5Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie5Label">เสือเสือ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>Action, Crime, Fantasy</span></p>
+          <p>เรทผู้ชม: <span>18</span> | ⏱️ 140 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: ก้องเกียรติ โขมศิริ</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://lh3.googleusercontent.com/Pi6jM3LKumegmhX8hPxDzCP4MitCYhmvxAjqmddez5qZas2fnYKj9dCZ3mLqlbPjJUDlJ0pEQdTNzpdjuFI=w100" alt="ศุกลวัฒน์ คณารศ"><div class="actor-name">ศุกลวัฒน์ คณารศ</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/fnGiVtbuaQ2PejP7vh-Gk8_qGV3qgNzI4QNRxjN9qy90NDjeNyciRCQP9BZAyvF9BH8beCVEhgpklhnGmsom=w100" alt="มาริโอ้ เมาเร่อ"><div class="actor-name">มาริโอ้ เมาเร่อ</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/FdLCZEDj53tMmwPcYGmb3MsuTJGLdEygl4GILXU-5yDWIEsm2HWAVwQttWIjndqeq65HH5xZOzNofYBO-NCv=w100" alt="อารักษ์ อมรศุภศิริ"><div class="actor-name">อารักษ์ อมรศุภศิริอุกฤษ</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/BvAspVsEx7NNLHtnFXuzDJThKZEKA7oCWivKMpdGpfkDl3vG76fn_5HNCLDQcXxDJcfmRJ6iooqQ_ipQz-FMdMGUZNpieC8aoQ=w100" alt="ภาคิน คำวิลัยศักดิ์"><div class="actor-name">ภาคิน คำวิลัยศักดิ์</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/YGs4YIXc_Q2O_XZHKqLJGLnkq2mISFJwZdMlHP464pExH6FxwwpgSxlugd4_wukvUdVbcrJ-_fWebI7exsy58C0UfvIO1bSK=w100" alt="ทศพล หมายสุข"><div class="actor-name">ทศพล หมายสุข</div></div>
+          </div>
+        <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>ในช่วงสงครามโลกครั้งที่ 2 ทองคำมหาศาลที่ฝ่ายอักษะมอบไว้กับรัฐบาลไทยเพื่อสร้างทางรถไฟสายใหม่ที่หวังทั้งการค้าและกำจัดฝั่งสัมพันธมิตรถูกปล้นหายไป จอมพลเลิศ ฝ่ายปกครองที่มีอำนาจล้นมือจึงประกาศกวาดล้างชุมโจรโดยตั้งค่าหัวล่า เสือ ทั่วประเทศ</p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="movie6" tabindex="-1" aria-labelledby="movie6Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie6Label">ธี่หยด</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>Action, Horror</span></p>
+          <p>เรทผู้ชม: <span>15</span> | ⏱️ 105 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p> 
+          <p>ผู้กำกับ: ณฤทธิ์ ยุวบูรณ์, ธนเดช ประดิษฐ์</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://pbs.twimg.com/profile_images/1115320085709611009/pZXpW18L_400x400.jpg" alt="ณเดชน์"><div class="actor-name">ณเดชน์</div></div>
+            <div class="actor"><img src="https://s.isanook.com/mv/0/ui/31/158103/gal-158103-20231027032412-de804a3.jpeg" alt="ณัฐชา เจสซิกา"><div class="actor-name">ณัฐชา เจสซิกา</div></div>
+            <div class="actor"><img src="https://i.mydramalist.com/26Xmk_5c.jpg" alt="กาจบัณฑิต"><div class="actor-name">กาจบัณฑิต</div></div>
+            <div class="actor"><img src="https://static.thairath.co.th/media/dFQROr7oWzulq5Fa5LTeZy0AzprSRLu5xv2xLaUzZMT7uNwVY6uIiDSlyGvkgz34nJs.webp" alt="พีระกฤตย์"><div class="actor-name">พีระกฤตย์</div></div>
+            <div class="actor"><img src="https://s359.kapook.com/r/600/auto/pagebuilder/51d0ede4-57b2-4664-bdd0-b743c58daac9.jpg" alt="เดนิส เจลีลชา"><div class="actor-name">เดนิส เจลีลชา</div></div>
+            <div class="actor"><img src="https://image.thepeople.co/uploads/images/contents/w1024/2025/10/1hggCRVrIPBupdxtV5qY.webp?x-image-process=style/lg-webp" alt="องอาจ"><div class="actor-name">องอาจ</div></div>
+            <div class="actor"><img src="https://static.thairath.co.th/media/dFQROr7oWzulq5Fa5yMr4foNOuRV3qNQJQhyZ8gKCvvAVR0c4K1hXoUOwY9TwKYARRd.jpg" alt="เฌอมาวีร์"><div class="actor-name">เฌอมาวีร์</div></div>
+          </div>
+         <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>เด็กสาวเสียชีวิตอย่างปริศนาในหมู่บ้านห่างไกล ทำให้ครอบครัวของหยาดต้องเผชิญกับเสียงลี้ลับ “ธี่ หยด” และปรากฏการณ์เหนือธรรมชาติที่คุกคามชีวิตพวกเขา</p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="modal fade" id="movie7" tabindex="-1" aria-labelledby="movie7Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie7Label">อนงค์ สอง..สามสี่ชาติ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>Comedy, Fantasy, Romance</span></p>
+          <p>เรทผู้ชม: <span>15</span> | ⏱️ 115 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: คมกฤษ ตรีวิมล</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Bow_maylada.jpg" alt="เมลดา สุศรี"><div class="actor-name">เมลดา สุศรี</div></div>
+            <div class="actor"><img src="https://static.thairath.co.th/media/00_A5B2748110C2E1280.webp" alt="เฉลิมพล ทิฆัมพรธีรวงศ์"><div class="actor-name">เฉลิมพล ทิฆัมพรธีรวงศ์</div></div>
+            <div class="actor"><img src="https://www.siamzone.com/ig/media/1992973541/3367050898860420068-1.jpg" alt="สุทธิกษณ์"><div class="actor-name">สุทธิกษณ์</div></div>
+            <div class="actor"><img src="https://www.siamzone.com/ig/media/10417337/3622184301393059256-1.jpg" alt="ธามไท"><div class="actor-name">ธามไท</div></div>
+          </div>
+        <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>หลังบทสรุปของ อนงค์ ในภาคแรก โจ ได้รับมรดกเป็นบ้านหลังเก่า และได้พบกับ อนงค์ ผีสาวที่ติดอยู่ในบ้าน ความรักของทั้งคู่เริ่มต้นขึ้นและต้องจบลงด้วยการจากลา แล้วโจก็ใช้ชีวิตต่อไปจนสิ้นอายุขัย</p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="movie8" tabindex="-1" aria-labelledby="movie8Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="movie8Label">404 สุขีนิรันดร์..RUN RUN</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>หมวดหมู่: <span>Comedy, Horror</span></p>
+          <p>เรทผู้ชม: <span>15</span> | ⏱️ 100 นาที</p>
+          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>ผู้กำกับ: พิชย จรัสบุญประชา</p>
+          <h5 class="mt-3">นักแสดง</h5>
+          <div class="actors">
+            <div class="actor"><img src="https://lh3.googleusercontent.com/W9tiTlY1jthCmP0XmOShob3UDqpFOzxKDU2rmjYF56wenNIGZaOTaZ2vKdmMtVroc15ox0Ic1lPw_XNxJ8At=w100" alt="ฉันทวิชช์"><div class="actor-name">ฉันทวิชช์</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/sMmEPKg-g2Fu0hjOkifsNps7G_kg0Hx6FFFo2QIG9L4gp43nArDl9S6_8yNBpkSMNwddqB52b33K1DO_Knhv5CZXTKpOsuJyAg=w100" alt="ชูเกียรติ"><div class="actor-name">ชูเกียรติ</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/eNUuRjBRaeR5VR5w-7xA1iay23I0LZ5_rz5IU5KQRw8mK-qD1beRU_b0_trj-XBEqvVVRtoIRjjprau3wlTI2r9Qvn5TQVdmOOg=w100" alt="สุภทัต "><div class="actor-name">สุภทัต </div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/4sk_bYRdUH4EZsG0rLV4-3BYCebWbyPBHj7N299vKPfb_d_ioy2yI9v2GEQq8STiWOjeAk1n__9Q3h3Lqs0SNdlpryu5mgMv=w100" alt="กัญญาวีร์ "><div class="actor-name">กัญญาวีร์</div></div>
+            <div class="actor"><img src="https://lh3.googleusercontent.com/r1-eVa6ejO9A2ozBIlu2biFP-DUkt69ykEB2t1DnqBTOe5e6BncGh420Pdh2qqjtRTQTiNC-FW75Hc2IqV6OnG-GWeQ8vytNYw=w100" alt="พิทยา"><div class="actor-name">พิทยา</div></div>
+          </div>
+        <hr style="border: none; height: 5px; background-color: black;">
+         <div class="Synopsis">เรื่องย่อ</div>
+         <p>นักรบ (เต๋อ ฉันทวิชช์) นายหน้าจอมพลิ้วผู้หากินด้วยการซื้อบ้านมีประวัติมารีโนเวทย้อมแมวขาย กำลังคิดการใหญ่ว่าจะย้อมช้างขายโรงแรมผี เพราะถูก หลิน (นัตตี้ นันทนัท) คนรักที่คบมาครึ่งชีวิตขอเลิก ด้วยข้อหาว่าไม่มีอนาคต แต่ต่อให้งานจะไม่รุ่ง รักจะไม่รอด นักรบก็ไม่ยอมถอดใจ</p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container-sm"> <!-- Insert container for control movies card // เพ่ิ่ม Container เพื่อควบคุม Card -->
+  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ 5 อันดับมาแรง แรงมากก</h2>
+  <!-- ใส่ 5 อันดับหน้ง -->
+  <div class="movie-row">
+    <div class="movie-card">
+      <span class="rank">HOT</span>
+      <img src="https://image.bangkokbiznews.com/uploads/images/contents/w1024/2025/07/Ywv43hup3FaDWLDIFLXp.webp?x-image-process=style/lg-webp" alt="movie">
+      <div class="movie-title">Superman</div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">HOT</span>
+      <img src="https://lh3.googleusercontent.com/Z0CecYkGB-qCTzQ4B2RmY9vtfiiClcQgv6au-CZhNlRxEWyXs9e_K8zTAJz28Te6s7DSXI7cCjrTDZ9bVcWnJWP0SPHTSzW4mA=s0" alt="movie">
+      <div class="movie-title">ดาบพิฆาตอสูร ภาคปราสาทไร้ขอบเขต</div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">HOt</span>
+      <img src="https://spacebar.th/api/media/file/onesheet-1.jpg" alt="movie">
+      <div class="movie-title">Mission: Impossible 8</div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">HOT</span>
+      <img src="https://m.media-amazon.com/images/I/914yaGHBsgL._AC_UF894,1000_QL80_.jpg" alt="movie">
+      <div class="movie-title">From the World of John Wick: Ballerina </div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">HOT</span>
+      <img src="https://resizing.flixster.com/9GzvfSWe1iPtRk_vtcfpHIQGyCI=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2U2MzgyZDIyLWNjZmYtNGU5NS05ZjczLTYyZGE1ZGIyYzIxNC5qcGc=" alt="movie">
+      <div class="movie-title">Thunderbolts</div>
+    </div>
+  </div>
+</div>
+
+  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ 5 อันดับทำรายได้มากที่สุด</h2>
+<!--  -->
+<div class="toggle-buttons">
+  <button class="tab active" onclick="showPage('major')">Major</button>
+  <button class="tab" onclick="showPage('us')">US</button>
+</div>
+
+<!-- หน้า Major -->
+<div id="major" class="page active">
+  <div class="movie-row">
+    <div class="movie-card">
+      <span class="rank">1</span>
+      <img src="https://lh3.googleusercontent.com/EYSMGiNNuYk9c2Vyz2b31Ux-syitTBe1F9yi9ciIXoa_iQBcQ1_-YJG4vtgPW7gZLQyMARWOPhH_3zbb9L8O8mZ9BG6N8Fn7=s0" alt="movie">
+      <div class="movie-title">Chainsaw Man" the Movie: Reze Arc</div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">2</span>
+      <img src="https://lh3.googleusercontent.com/Z0CecYkGB-qCTzQ4B2RmY9vtfiiClcQgv6au-CZhNlRxEWyXs9e_K8zTAJz28Te6s7DSXI7cCjrTDZ9bVcWnJWP0SPHTSzW4mA=s0" alt="movie">
+      <div class="movie-title">Demon Slayer: Kimetsu no Yaiba – Infinity Castle Arc </div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">3</span>
+      <img src="https://lh3.googleusercontent.com/-VuQDEF_0lbWPfZaO0xxy5X5Br5YGeBBARwdtYgpZPFXgKJW5pMYhLBYsDZ81sA7CrUpVjYGz-jjsWsUW2_QjFB7x0rkIFSbOVs=s0" alt="movie">
+      <div class="movie-title">F1: The Movie</div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">4</span>
+      <img src="https://lh3.googleusercontent.com/6zKylkl5TWKvVi-cSACjRzW8bWNZ2ky0BG0EaU9atiAKQIcF20tXwfgVnUllHTTvrc_G7YHdRp_umAw2b13J9nCwV08p7aEy=s0" alt="movie">
+      <div class="movie-title">A Minecraft Movie </div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">5</span>
+      <img src="https://lh3.googleusercontent.com/5DPcO4_9l0wKTJ35NZgx0BFCzBFujd4pC9fWxgRXFPh4tRu4sLloPWjNFoZ-mMlEfYXHfNpCly0VRk0lFkBLGGQlyEwQY3oTZw=s0" alt="movie">
+      <div class="movie-title">How to Train Your Dragon</div>
+      <div class="date"></div>
+    </div>
+  </div>
+</div>
+
+<!-- หน้า US -->
+<div id="us" class="page">
+  <div class="movie-row">
+     <div class="movie-card">
+      <span class="rank">1</span>
+      <img src="https://lh3.googleusercontent.com/Opm4LqsHfm5Qzh5B4GX1QjunEuhebPYQcyTE5-g_9V9pjIQCYEO7M7Ff6RM4TebblyL0iCeGaO38pQlH8_STcBwxJAai6uFX=s0" alt="movie">
+      <div class="movie-title">Ne Zha 2</div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">2</span>
+      <img src="https://lh3.googleusercontent.com/-_cOqGKLaX-9o6wFJDca80xXXE2JBGIxEF-FCgsvdymdqNIGJR8Gw_fR3pTKu7Co2bfi3405QRRat9weFL3_leugQbLOmWBSi-M=s0" alt="movie">
+      <div class="movie-title">Lilo & Stitch</div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">3</span>
+      <img src="https://lh3.googleusercontent.com/WYp2Z2zPeGOmsYZ9Z63nwjHOMjy0v61je9p1L_dL69JGTD0ISIUm1q2kmcOcOlmaO9Fo8nwB-5Pyj9C8wx7i2o8BQkPeiWNtxKQ=s0" alt="movie">
+      <div class="movie-title">Superman (2025) </div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">4</span>
+      <img src="https://lh3.googleusercontent.com/9rG7XQC5jwYHEbTdK1SM5g6qS-d7sNUWUTu8-a4jWy_zlDVV1Rq8Xy2eryz0My5BUHcaTgcWvxKcP5f38B9ThF8BeLGE3Y0ecw=s0" alt="movie">
+      <div class="movie-title">Mission: Impossible – The Final Reckoning </div>
+      <div class="date"></div>
+    </div>
+
+    <div class="movie-card">
+      <span class="rank">5</span>
+      <img src="https://lh3.googleusercontent.com/r0Y8wlNkZw01JudO8V5KJVwp1bKkz0CifG1bRSTF9zUs7NWu-9Us2Q2IQM92bnWsx2CxtFQ827DyXfaIVb8DlYUE4dps7_Thcg=s0" alt="movie">
+      <div class="movie-title">Fantastic Four: First Steps</div>
+      <div class="date"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Footer -->
+    <footer class="footer-bg py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-white">เกี่ยวกับเรา</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-white">ประวัติ</a></li>
+                        <li><a href="#" class="text-decoration-none text-white">ติดต่อเรา</a></li>
+                        <li><a href="#" class="text-decoration-none text-white">ร่วมงานกับเรา</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-white">บริการ</h5>
+                    <ul class="list-unstyled ">
+                        <li><a href="#" class="text-decoration-none text-white">วิธีการจองตั๋ว</a></li>
+                        <li><a href="#" class="text-decoration-none text-white">โปรโมชั่น</a></li>
+                        <li><a href="#" class="text-decoration-none text-white">คำถามที่พบบ่อย</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="text-white">ติดตามเรา</h5>
+                    <p class="text-muted">
+                        <i class="bi bi-facebook me-2"></i> Facebook <br>
+                        <i class="bi bi-twitter me-2"></i> Twitter <br>
+                        <i class="bi bi-instagram me-2"></i> Instagram
+                    </p>
+                </div>
+            </div>
+            <div class="text-center pt-3 border-top border-secondary">
+                <p class="mb-0 text-white">&copy; 2025 MovieTix. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function showPage(pageName) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+        document.getElementById(pageName).classList.add('active');
+        event.target.classList.add('active');
+      }
+    </script>
+  </body>
+</html>

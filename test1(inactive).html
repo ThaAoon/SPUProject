@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตัวอย่าง Modal จองตั๋ว 3 ส่วน (ไม่มี Tab)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* CSS ส่วนเพิ่มเติมสำหรับการแสดงที่นั่ง */
+        .seat-chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+
+        .screen-display {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            width: 90%;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .seat-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .seat {
+            width: 35px;
+            height: 35px;
+            margin: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #ced4da;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        /* สถานะที่นั่ง */
+        .available {
+            background-color: #e9ecef;
+        }
+        .occupied {
+            background-color: #dc3545;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .selected {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.1);
+            border-color: #007bff;
+        }
+
+        .aisle-gap {
+            height: 20px;
+            margin: 10px 0;
+            border-top: 1px dashed #adb5bd;
+            border-bottom: 1px dashed #adb5bd;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            line-height: 20px;
+            width: 100%;
+        }
+
+        /* ปรับขนาด Modal ให้ใหญ่พอสำหรับ 3 ส่วน */
+        .modal-3-parts {
+            max-width: 1200px;
+        }
+
+        /* สไตล์สำหรับส่วนเลือกเวลา */
+        .time-slot {
+            cursor: pointer;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            text-align: center; /* จัดให้อยู่ตรงกลาง */
+        }
+        .time-slot:hover {
+            background-color: #f8f9fa;
+        }
+        .time-slot.active {
+            background-color: #28a745; /* สีเขียวเมื่อถูกเลือก */
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* สไตล์สำหรับคอนเทนเนอร์หลักในส่วน 2 และ 3 */
+        .combined-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* ระยะห่างระหว่างส่วนเลือกเวลาและส่วนเลือกที่นั่ง */
+        }
+    </style>
+</head>
+<body>
+
+    <button type="button" class="btn btn-warning btn-lg m-5" data-bs-toggle="modal" data-bs-target="#bookingCombinedModal">
+        จองตั๋ว Predator Badlands (Combined)
+    </button>
+
+    <div class="modal fade" id="bookingCombinedModal" tabindex="-1" aria-labelledby="bookingCombinedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal-3-parts">
+            <div class="modal-content">
+
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="bookingCombinedModalLabel">
+                        **Predator Badlands**
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <div class="row g-0">
+                        
+                        <div class="col-md-3 border-end p-3 bg-light">
+                            <h6 class="text-center">🎥 รายละเอียด</h6>
+                            <img src="" class="img-fluid rounded shadow-sm mb-3" alt="โปสเตอร์ภาพยนตร์">
+                            <p class="small text-muted mb-1">
+                                ภาพยนตร์แนวโรแมนติกแฟนตาซี ถ่ายทอดเรื่องราวความรักข้ามชาติ...
+                            </p>
+                            <p class="mb-1 small">**วันที่:** <span id="selected-date">10 พ.ย. 2568</span></p>
+                        </div>
+
+                        <div class="col-md-9 p-3 combined-content">
+                            
+                            <div>
+                                <h5 class="mb-3">2. เลือกช่วงเวลาและโรงภาพยนตร์</h5>
+                                <div class="row row-cols-md-4 row-cols-2 g-2">
+                                    <div class="col"><div class="time-slot" data-time="11:00" data-cinema="3">11:00 น.<br/>โรง 3</div></div>
+                                    <div class="col"><div class="time-slot" data-time="14:30" data-cinema="5">14:30 น.<br/>โรง 5</div></div>
+                                    <div class="col"><div class="time-slot" data-time="18:00" data-cinema="5">18:00 น.<br/>โรง 5</div></div>
+                                    <div class="col"><div class="time-slot" data-time="21:45" data-cinema="2">21:45 น.<br/>โรง 2</div></div>
+                                    <div class="col"><div class="time-slot" data-time="22:30" data-cinema="1">22:30 น.<br/>โรง 1 (IMAX)</div></div>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="text-center">
+                                <h5 class="mb-3">3. เลือกที่นั่งรับชม 🛋️</h5>
+                                
+                                <p class="text-danger small" id="seat-error" style="display: none;">กรุณาเลือกเวลารอบฉายก่อน</p>
+
+                                <div class="d-flex justify-content-center">
+                                    <div class="seat-chart-container" id="seat-chart-area">
+                                        <div class="screen-display">จอภาพ (SCREEN)</div>
+                                        <div class="seat-row" id="row-A">
+                                            <span class="seat available" data-id="A1">A1</span>
+                                            <span class="seat available" data-id="A2">A2</span>
+                                            <span class="seat available" data-id="A3">A3</span>
+                                            <span class="seat available" data-id="A4">A4</span>
+                                            <span class="seat available" data-id="A5">A5</span>
+                                        </div>
+                                        <div class="seat-row" id="row-B">
+                                            <span class="seat available" data-id="B1">B1</span>
+                                            <span class="seat occupied" data-id="B2">B2</span>
+                                            <span class="seat occupied" data-id="B3">B3</span>
+                                            <span class="seat available" data-id="B4">B4</span>
+                                            <span class="seat available" data-id="B5">B5</span>
+                                        </div>
+                                        <div class="seat-row" id="row-C">
+                                            <span class="seat available" data-id="C1">C1</span>
+                                            <span class="seat available" data-id="C2">C2</span>
+                                            <span class="seat available" data-id="C3">C3</span>
+                                            <span class="seat available" data-id="C4">C4</span>
+                                            <span class="seat available" data-id="C5">C5</span>
+                                        </div>
+                                        <div class="aisle-gap">ทางเดิน (Aisle)</div>
+                                        <div class="seat-row" id="row-D">
+                                            <span class="seat available" data-id="D1">D1</span>
+                                            <span class="seat available" data-id="D2">D2</span>
+                                            <span class="seat available" data-id="D3">D3</span>
+                                            <span class="seat available" data-id="D4">D4</span>
+                                            <span class="seat available" data-id="D5">D5</span>
+                                        </div>
+                                        <div class="seat-row" id="row-E">
+                                            <span class="seat available" data-id="E1">E1</span>
+                                            <span class="seat available" data-id="E2">E2</span>
+                                            <span class="seat available" data-id="E3">E3</span>
+                                            <span class="seat available" data-id="E4">E4</span>
+                                            <span class="seat available" data-id="E5">E5</span>
+                                        </div>
+                                        <div class="seat-row" id="row-F">
+                                            <span class="seat available" data-id="F1">F1</span>
+                                            <span class="seat available" data-id="F2">F2</span>
+                                            <span class="seat available" data-id="F3">F3</span>
+                                            <span class="seat available" data-id="F4">F4</span>
+                                            <span class="seat available" data-id="F5">F5</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 ms-4 small">
+                                        <p class="fw-bold">สัญลักษณ์:</p>
+                                        <div class="d-flex align-items-center mb-1"><span class="seat available me-2 p-0" style="width:20px; height:20px;"></span> ว่าง</div>
+                                        <div class="d-flex align-items-center mb-1"><span class="seat occupied me-2 p-0" style="width:20px; height:20px;"></span> ถูกจองแล้ว</div>
+                                        <div class="d-flex align-items-center"><span class="seat selected me-2 p-0" style="width:20px; height:20px;"></span> ที่เลือก</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-between">
+                    <div id="booking-summary">
+                        รอบฉาย: <span class="fw-bold text-primary" id="final-time">--</span> 
+                        | ที่นั่ง: <span class="fw-bold text-primary" id="selected-seats-count">0</span> ที่นั่ง 
+                        | ราคารวม: <span class="fw-bold text-success" id="total-price">0</span> บาท
+                    </div>
+                    <button type="button" class="btn btn-warning fw-bold" id="proceed-button" disabled>
+                        ยืนยันการจอง
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const seats = document.querySelectorAll('.seat.available');
+        const selectedSeatsCount = document.getElementById('selected-seats-count');
+        const totalPrice = document.getElementById('total-price');
+        const proceedButton = document.getElementById('proceed-button');
+        const finalTimeDisplay = document.getElementById('final-time');
+        const seatChartArea = document.getElementById('seat-chart-area');
+        const seatError = document.getElementById('seat-error');
+        const pricePerSeat = 170;
+        let selectedTime = null;
+
+        // เริ่มต้น: ทำให้ที่นั่งทั้งหมดใช้งานไม่ได้จนกว่าจะเลือกเวลา
+        seats.forEach(seat => seat.style.pointerEvents = 'none');
