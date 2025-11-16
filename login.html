@@ -11,7 +11,11 @@
 <!-- Menubar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">🎥 MovieTix</a>
+            <a class="navbar-brand fw-bold" href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+                <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z"/>
+            </svg>&nbsp;
+             ICT Grand Cinema</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -50,15 +54,17 @@
                 <input type="password" class="form-control" id="password" placeholder="กรอกรหัสผ่านของคุณ" required>
               </div>
               <div class="d-grid">
-                <a href="index.html" class="btn btn-danger">เข้าสู่ระบบ</a>
+                <button type="submit" class="btn btn-danger w-100">เข้าสู่ระบบ</button>
               </div>
             </form>
             <p class="text-center mt-3">ยังไม่มีบัญชี? <a href="signUp.html">สมัครสมาชิก</a></p>
+            
           </div>
         </div>
       </div>
     </div>
-  </div>    
+  </div>  
+    
 
 <!-- Footer -->
     <footer class="footer-bg py-4 mt-auto">
@@ -82,10 +88,10 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5 class="text-white">ติดตามเรา</h5>
-                    <p class="text-muted">
-                        <i class="bi bi-facebook me-2"></i> Facebook <br>
-                        <i class="bi bi-twitter me-2"></i> Twitter <br>
-                        <i class="bi bi-instagram me-2"></i> Instagram
+                    <p class="text-white">
+                        <i class="bi bi-facebook me-2"></i><a href="https://www.facebook.com/?locale=th_TH">Facebook</a><br>
+                        <i class="bi bi-twitter me-2"></i><a href="https://www.tiktok.com/th-TH/">Tiktok</a><br>
+                        <i class="bi bi-instagram me-2"></i><a href="https://www.instagram.com/">Instagram</a>
                     </p>
                 </div>
             </div>
@@ -96,6 +102,19 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+        
+            if (email === "" || password === "") {
+                event.preventDefault();  // ❌ หยุดไม่ให้ส่งฟอร์ม
+                alert("กรุณากรอกอีเมลและรหัสผ่านให้ครบ");
+            } else {
+                // ✔ ถ้ากรอกครบไปหน้า index.html
+                window.location.href = "index.html";
+            }
+        });
+        </script>
 </body>
-
 </html>
