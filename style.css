@@ -11,6 +11,9 @@ body{
   flex-direction: column;
   min-height: 100vh;
 }
+svg{
+  color: #FFA500;
+}
 h2{
   color: white;
 }
@@ -169,4 +172,8 @@ li a{
 .img-thumbnail{
   width: 40%;
   height: 100%;
+}
+.text-white a{
+  color: white;
+  text-decoration: none;
 }
