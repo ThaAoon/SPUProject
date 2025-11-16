@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ชื่อเว็บไซต์จองตั๋วหนัง</title>
+    <title>ICT Grand Cinema</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
@@ -40,13 +40,20 @@
       .movie-row {
         display: flex;
         justify-content: center;
-        gap: 20px;
+        flex-wrap: wrap; /* Allow cards to wrap */
+        gap: 10px;
         padding: 20px;
       }
 
       .movie-card {
-        width: 250px;
+        /* width: 250px;  <-- REMOVED for responsiveness */
         position: relative;
+        flex-shrink: 0; /* Prevent cards from shrinking too much */
+      }
+
+      /* Make the cards in the custom row responsive */
+      .movie-row .movie-card {
+          width: 250px; /* Keep original width for desktop */
       }
 
       .movie-card img {
@@ -105,13 +112,47 @@
           .value {
             color: #555;
           }
+
+    @media (max-width: 768px) {
+        .movie-row {
+            gap: 10px;
+        }
+        .movie-row .movie-card {
+            /* Adjust width for smaller screens, allowing ~2 cards per row */
+            width: 40%;
+        }
+        .actors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .actor {
+            width: calc(50% - 10px); /* Two actors per row */
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .movie-row .movie-card {
+            /* A single card per row on very small screens */
+            width: 80%;
+        }
+        .actor {
+            width: 100%; /* Single actor per row */
+        }
+    }
+
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">🎥 MovieTix</a>
+            <a class="navbar-brand fw-bold" href="index.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+                <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z"/>
+              </svg>&nbsp;
+             ICT Grand Cinema</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -147,35 +188,35 @@
                 <div class="carousel-item active h-100">
                     <div class="d-flex align-items-center justify-content-center h-100 text-white">
                         <div class="centered-slide" id="MovieSlider1">
-                            <h1 class="bg-dark p-2 rounded">🔥 หนังใหม่มาแรง จองได้แล้ววันนี้!</h1>
+                            <h1 class="bg-dark p-2 rounded text-center">🔥 หนังใหม่มาแรง จองได้แล้ววันนี้!</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item h-100">
                     <div class="d-flex align-items-center justify-content-center h-100 text-white">
                         <div class="centered-slide" id="MovieSlider2">
-                            <h1 class="bg-dark p-2 rounded">🎟️ โปรโมชั่นลด 50% ทุกที่นั่ง!</h1>
+                            <h1 class="bg-dark p-2 rounded text-center">🎟️ โปรโมชั่นลด 50% ทุกที่นั่ง!</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item h-100">
                     <div class="d-flex align-items-center justify-content-center h-100 text-white">
                         <div class="centered-slide" id="MovieSlider3">
-                            <h1 class="bg-dark p-2 rounded">✨ รอบพิเศษเสียงไทย จองก่อนเต็ม!</h1>
+                            <h1 class="bg-dark p-2 rounded text-center">✨ รอบพิเศษเสียงไทย จองก่อนเต็ม!</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item h-100">
                     <div class="d-flex align-items-center justify-content-center h-100 text-white">
                         <div class="centered-slide" id="MovieSlider4">
-                            <h1 class="bg-dark p-2 rounded">🎥 หนังดัง นำกลับมาฉาย</h1>
+                            <h1 class="bg-dark p-2 rounded text-center">🎥 หนังดัง นำกลับมาฉาย</h1>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item h-100">
                     <div class="d-flex align-items-center justify-content-center h-100 text-white">
                         <div class="centered-slide" id="MovieSlider5">
-                            <h1 class="bg-dark p-2 rounded">🎟️ เอาใจชาวไทย 69 บาททุุกที่นั่ง!</h1>
+                            <h1 class="bg-dark p-2 rounded text-center">🎟️ เอาใจชาวไทย 69 บาททุุกที่นั่ง!</h1>
                         </div>
                     </div>
                 </div>
@@ -287,7 +328,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>Drama, Thriller</span></p>
           <p>เรทผู้ชม: <span>15</span> | ⏱️ 120 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: อารักษ์ อมรศุภศิริ, วุฒิพงษ์ สุขะนินทร์</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -300,6 +341,9 @@
           <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>เมื่อ เอก ต้องการเงินไปรักษาพ่อที่ป่วยหนัก เขาเอาพระเครื่องของพ่อไป ประเมินราคากับเซียนพระชื่อดัง เซ้งพาราไดซ์ เอกได้เจอกับ เซียนหมวย เซียนพระสุดฮ็อตที่เข้ามาแนะนำให้ส่งพระเข้าประกวด</p>
+         <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/Hx6Don4cmOA" title="YouTube video player" allowfullscreen></iframe>
+         </div>
         </div>
       </div>
     </div>
@@ -318,7 +362,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span> Family</span></p>
           <p>เรทผู้ชม: <span>G</span> | ⏱️ 125 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: พัฒน์ บุญนิธิพัฒน์</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -332,6 +376,9 @@
            <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>เอ็ม (บิวกิ้น พุฒิพงศ์) ตัดสินใจดรอปเรียนตอนปีสี่ เพื่อมาเอาดีทางการแคสต์เกมแต่ทำยังไงก็ไม่รุ่ง เอ็มเลยคิดว่าจะรวยด้วยการทำงานสบายๆ แบบ มุ่ย (ตู ต้นตะวัน) ลูกพี่ลูกน้อง ที่รับหน้าที่ดูแลอากงที่ป่วยระยะสุดท้าย จนกลายเป็นทายาทเพียงคนเดียวที่ได้รับมรดกเป็นบ้านราคากว่าสิบล้าน</p>
+         <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/0fksoEJvdLE" title="YouTube video player" allowfullscreen></iframe>
+         </div>
         </div>
         </div>
       </div>
@@ -348,7 +395,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>Action, Romance</span></p>
           <p>เรทผู้ชม: <span>15</span> | ⏱️ 135 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: วาสุเทพ เกตุเพ็ชร์</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -360,6 +407,9 @@
          <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>ณ โลกสีเทาของเมืองชายหาดอันโด่งดังของไทย เขาคือหนุ่มหล่อนักทวงหนี้นอกระบบ ที่อาชีพของเขาแต่ละวันต้องเผชิญหน้ากับความขัดแย้งและความรุนแรงซ้ำ ๆ วนลูปแบบไม่รู้จบ </p>
+        <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/LUfmyy4i6OQ" title="YouTube video player" allowfullscreen></iframe>
+        </div>
         </div>
       </div>
     </div>
@@ -375,7 +425,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>TBC</span></p>
           <p>เรทผู้ชม: <span>15</span> | ⏱️ 125 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: นฤเบศ กูโน</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -388,7 +438,10 @@
           <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>เมื่อบ้านพร้อมสวนทุเรียน ที่ควรเป็น ‘วิมาน’ ความรักของชายสองคน ถูกช่วงชิงไปด้วยกฎหมาย การขุด ‘หนาม’ ในตัว เพื่อปกป้องและทำลาย จึงเริ่มต้นขึ้น</p>
-          </div>
+         <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/l1gg7dGbUfI" title="YouTube video player" allowfullscreen></iframe>
+         </div>
+        </div>
         </div>
       </div>
     </div>
@@ -404,7 +457,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>Action, Crime, Fantasy</span></p>
           <p>เรทผู้ชม: <span>18</span> | ⏱️ 140 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: ก้องเกียรติ โขมศิริ</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -417,7 +470,10 @@
         <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>ในช่วงสงครามโลกครั้งที่ 2 ทองคำมหาศาลที่ฝ่ายอักษะมอบไว้กับรัฐบาลไทยเพื่อสร้างทางรถไฟสายใหม่ที่หวังทั้งการค้าและกำจัดฝั่งสัมพันธมิตรถูกปล้นหายไป จอมพลเลิศ ฝ่ายปกครองที่มีอำนาจล้นมือจึงประกาศกวาดล้างชุมโจรโดยตั้งค่าหัวล่า เสือ ทั่วประเทศ</p>
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/7-wVEiOojbM" title="YouTube video player" allowfullscreen></iframe>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -432,7 +488,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>Action, Horror</span></p>
           <p>เรทผู้ชม: <span>15</span> | ⏱️ 105 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p> 
+          <p>🔉: <span>TH</span> | 🎬:EN</p> 
           <p>ผู้กำกับ: ณฤทธิ์ ยุวบูรณ์, ธนเดช ประดิษฐ์</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -447,7 +503,10 @@
          <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>เด็กสาวเสียชีวิตอย่างปริศนาในหมู่บ้านห่างไกล ทำให้ครอบครัวของหยาดต้องเผชิญกับเสียงลี้ลับ “ธี่ หยด” และปรากฏการณ์เหนือธรรมชาติที่คุกคามชีวิตพวกเขา</p>
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/vm4eW3JF0i8" title="YouTube video player" allowfullscreen></iframe>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -462,7 +521,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>Comedy, Fantasy, Romance</span></p>
           <p>เรทผู้ชม: <span>15</span> | ⏱️ 115 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: คมกฤษ ตรีวิมล</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -474,7 +533,10 @@
         <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>หลังบทสรุปของ อนงค์ ในภาคแรก โจ ได้รับมรดกเป็นบ้านหลังเก่า และได้พบกับ อนงค์ ผีสาวที่ติดอยู่ในบ้าน ความรักของทั้งคู่เริ่มต้นขึ้นและต้องจบลงด้วยการจากลา แล้วโจก็ใช้ชีวิตต่อไปจนสิ้นอายุขัย</p>
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/ogn86EaMdBQ" title="YouTube video player" allowfullscreen></iframe>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -489,7 +551,7 @@
         <div class="modal-body">
           <p>หมวดหมู่: <span>Comedy, Horror</span></p>
           <p>เรทผู้ชม: <span>15</span> | ⏱️ 100 นาที</p>
-          <p>🔉: <span>Thi</span> | 🎬:EN</p>
+          <p>🔉: <span>TH</span> | 🎬:EN</p>
           <p>ผู้กำกับ: พิชย จรัสบุญประชา</p>
           <h5 class="mt-3">นักแสดง</h5>
           <div class="actors">
@@ -502,13 +564,16 @@
         <hr style="border: none; height: 5px; background-color: black;">
          <div class="Synopsis">เรื่องย่อ</div>
          <p>นักรบ (เต๋อ ฉันทวิชช์) นายหน้าจอมพลิ้วผู้หากินด้วยการซื้อบ้านมีประวัติมารีโนเวทย้อมแมวขาย กำลังคิดการใหญ่ว่าจะย้อมช้างขายโรงแรมผี เพราะถูก หลิน (นัตตี้ นันทนัท) คนรักที่คบมาครึ่งชีวิตขอเลิก ด้วยข้อหาว่าไม่มีอนาคต แต่ต่อให้งานจะไม่รุ่ง รักจะไม่รอด นักรบก็ไม่ยอมถอดใจ</p>
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/UzkvkfLmTys" title="YouTube video player" allowfullscreen></iframe>
           </div>
+        </div>
       </div>
     </div>
   </div>
 
-<div class="container-sm"> <!-- Insert container for control movies card // เพ่ิ่ม Container เพื่อควบคุม Card -->
-  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ 5 อันดับมาแรง แรงมากก</h2>
+<div class="container-fluid"> <!-- Insert container for control movies card // เพ่ิ่ม Container เพื่อควบคุม Card -->
+  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ 5 อันดับภาพยนตร์ยอดฮิต</h2>
   <!-- ใส่ 5 อันดับหน้ง -->
   <div class="movie-row">
     <div class="movie-card">
@@ -524,7 +589,7 @@
     </div>
 
     <div class="movie-card">
-      <span class="rank">HOt</span>
+      <span class="rank">HOT</span>
       <img src="https://spacebar.th/api/media/file/onesheet-1.jpg" alt="movie">
       <div class="movie-title">Mission: Impossible 8</div>
     </div>
@@ -543,11 +608,11 @@
   </div>
 </div>
 
-  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ 5 อันดับทำรายได้มากที่สุด</h2>
+  <h2 class="start mb-4 border-bottom pb-2 fw-bolder text-center">📽️ 5 อันดับภาพยนตร์ที่ทำรายได้มากที่สุด</h2>
 <!--  -->
 <div class="toggle-buttons">
-  <button class="tab active" onclick="showPage('major')">Major</button>
-  <button class="tab" onclick="showPage('us')">US</button>
+  <button class="tab active" onclick="showPage('major')">JP</button>
+  <button class="tab" onclick="showPage('us')">TH</button>
 </div>
 
 <!-- หน้า Major -->
@@ -617,7 +682,7 @@
     <div class="movie-card">
       <span class="rank">4</span>
       <img src="https://lh3.googleusercontent.com/9rG7XQC5jwYHEbTdK1SM5g6qS-d7sNUWUTu8-a4jWy_zlDVV1Rq8Xy2eryz0My5BUHcaTgcWvxKcP5f38B9ThF8BeLGE3Y0ecw=s0" alt="movie">
-      <div class="movie-title">Mission: Impossible – The Final Reckoning </div>
+      <div class="movie-title">Mission: Impossible The Final Reckoning </div>
       <div class="date"></div>
     </div>
 
@@ -656,10 +721,10 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5 class="text-white">ติดตามเรา</h5>
-                    <p class="text-muted">
-                        <i class="bi bi-facebook me-2"></i> Facebook <br>
-                        <i class="bi bi-twitter me-2"></i> Twitter <br>
-                        <i class="bi bi-instagram me-2"></i> Instagram
+                    <p class="text-white">
+                        <i class="bi bi-facebook me-2"></i><a href="https://www.facebook.com/?locale=th_TH">Facebook</a><br>
+                        <i class="bi bi-twitter me-2"></i><a href="https://www.tiktok.com/th-TH/">Tiktok</a><br>
+                        <i class="bi bi-instagram me-2"></i><a href="https://www.instagram.com/">Instagram</a>
                     </p>
                 </div>
             </div>
@@ -680,5 +745,4 @@
       }
     </script>
   </body>
-
 </html>
